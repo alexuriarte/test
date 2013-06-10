@@ -45,9 +45,16 @@ if (METHOD === "GET") {
     write_metric((float) $value);
     header("Location: /");
   } else { ?>
-      <p>This value (<? echo $value; ?>) is invalid.</p>
-      <p>Try a number!</p>
-      <p><a href="/">Please try again</a></p>
+      <div class="alert alert-error">
+        This value ("<? echo $value; ?>") is invalid.
+      </div>
+      <div class="text-center">
+        <a href="/" class="btn btn-large btn-primary" type="button">Please try again!</a>
+      </div>
+      <hr/>
+      <div>
+            <small class="muted">Hint: You should use a number for the metric!</small>
+      </div>
 <?  
   }
 } else {
