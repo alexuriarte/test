@@ -38,6 +38,12 @@ if (METHOD === "GET") {
           </div>
         </fieldset>
       </form>
+
+      <hr/>
+
+      <h2>Configuring autoscaling</h2>
+      <p>To make sure your app autoscales based on this metric, make sure that you defined
+         a file-based custom metric that uses <code><? echo METRIC_PATH; ?></code> as data source.</p>
 <? 
 } elseif (METHOD === "POST") {
   $value = $_POST["value"];
