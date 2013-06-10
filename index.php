@@ -5,7 +5,7 @@ include_once("functions.php");
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Scalr Demo App</title>
+    <title>Custom Metric App</title>
     <link type="text/css" href="/static/css/bootstrap.css" rel="stylesheet">
     <link type="text/css" href="/static/css/bootstrap-responsive.css" rel="stylesheet">
     <link type="image/x-icon" href="/static/img/favicon.ico" rel="shortcut icon" />
