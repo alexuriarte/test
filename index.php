@@ -1,42 +1,42 @@
 <?php
-DEFINE("METRIC_PATH", "/tmp/metric");
-DEFINE("METHOD", $_SERVER['REQUEST_METHOD']);
-
-function write_metric($value) {
-  if($fh = fopen(METRIC_PATH, "w")) {
-    fwrite($fh, (string) $value);
-    fclose($fh);
-  } else {
-    echo "Could not write to the metric path";
-  }
-  return $value;
-}
-
-
-function read_metric() {
-  if($fh = fopen(METRIC_PATH, "r")) {
-    $metric = fgets($fh);
-    fclose($fh);
-  } else {
-    $metric = write_metric(0); // Default value
-  }
-
-  return $metric;
-}
+include_once("constants.php");
+include_once("functions.php");
 ?>
-
+<!DOCTYPE html>
 <html>
   <head>
-  </head>
-  <body>
-    <h1>Custom Metric App</h1>
+        <title>Scalr Demo App</title>
+        <link type="text/css" href="/static/css/bootstrap.css" rel="stylesheet">
+        <link type="text/css" href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+        <link type="image/x-icon" href="/static/img/favicon.ico" rel="shortcut icon" />
+        <style type="text/css">code{color:#15d;} code.error{color:#d14}.hero-unit img{margin-right:10px;margin-top:10px}</style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="hero-unit">
+           <img src="/static/img/scalr-logo.png" alt="Scalr Logo" class="pull-left"/>
+           <h1>Custom Metric App</h1>
+           <p>This is the Custom Metric demo app. You submit metric values, and those will be picked up
+              by the custom metric.</p>
+        </div>
+        <div class="container">
 <?
 if (METHOD === "GET") { 
 ?>
-        <p>Metric set to: <?php echo read_metric(); ?></p>
-        <form action="/" method="post">
-          <label for="value">Give a new value to the metric:</label>
-          <input type="text" name="value"></input>
+        <h2>Current Value of the Metric</h2>
+        <p>The Metric is set to:
+          <span class="badge badge-info"><b><?php echo read_metric(); ?></b></span>
+        </p>
+        <small class="muted">This value will be used by Scalr for autoscaling.</small>
+
+        <h2>Modify this value</h2>
+        <form action="/" method="post" class="form-inline">
+            <fieldset>
+                <div class="input-append">
+                  <input autofocus="autofocus" type="text" name="value" placeholder="New Value..."/>
+                  <input type="submit" class="btn btn-success" value="Submit it!"/>
+                </div>
+            </fieldset>
         </form>
 <? 
 } elseif (METHOD === "POST") {
@@ -54,5 +54,6 @@ if (METHOD === "GET") {
   echo "Unsupported method";
 }
 ?>
+</div>
   </body>
 </html>

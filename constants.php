@@ -1,0 +1,4 @@
+<?php
+DEFINE("METRIC_PATH", "/tmp/metric");
+DEFINE("METHOD", $_SERVER['REQUEST_METHOD']);
+?>
