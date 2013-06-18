@@ -16,20 +16,25 @@ include_once("functions.php");
     <div class="hero-unit">
       <img src="/static/img/scalr-logo.png" alt="Scalr Logo" class="pull-left"/>
       <h1>Custom Metric App</h1>
-      <p>This is the Custom Metric demo app. You submit metric values, and those will be picked up
-      by the custom metric.</p>
+      <p>This is the Custom Metric demo app.</p>
+      <p>This lets you simulate and monitor the "CPU Cache Line activity" on this server.</p>
+      <p>This is a per-server metric, so its value might be different on each of your servers!</p>
+      <small class="muted">
+        Note that this is all fictional: CPU Cache Line activity isn't really monitored, and wouldn't
+        really make sense for autoscaling!
+      </small>
     </div>
     <div class="container">
 <?
-if (METHOD === "GET") { 
+if (METHOD === "GET") {
 ?>
       <h2>Current Value of the Metric</h2>
-      <p>The Metric is set to:
+      <p>CPU Cache Line Activity is currently at:
         <span class="badge badge-info"><b><?php echo read_metric(); ?></b></span>
       </p>
       <small class="muted">This value will be used by Scalr for autoscaling.</small>
 
-      <h2>Modify this value</h2>
+      <h2>Simulate a different level:</h2>
       <form action="/" method="post" class="form-inline">
         <fieldset>
           <div class="input-append">
@@ -42,9 +47,9 @@ if (METHOD === "GET") {
       <hr/>
 
       <h2>Configuring autoscaling</h2>
-      <p>To make sure your app autoscales based on this metric, make sure that you defined
+      <p>To make sure your app autoscales based on this CPU Cache Line Activity, make sure that you defined
          a file-based custom metric that uses <code><? echo METRIC_PATH; ?></code> as data source.</p>
-<? 
+<?
 } elseif (METHOD === "POST") {
   $value = $_POST["value"];
   if (is_numeric($value)) {
@@ -61,10 +66,10 @@ if (METHOD === "GET") {
       <div>
         <small class="muted">Hint: You should use a number for the metric!</small>
       </div>
-<?  
+<?
   }
 } else {
-  echo "Unsupported method";
+  echo "Unsupported method! (Try GET!)";
 }
 ?>
     </div>
