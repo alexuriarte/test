@@ -7,4 +7,4 @@ set -e
 rm -rf %remote_path%
 
 # Add a value to the custom metric
-echo 0 > /var/metric
+echo 0 > /tmp/cache-line-activity
