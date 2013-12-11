@@ -15,6 +15,6 @@ To work through this tutorial, you'll need an active [Scalr][2] account, or a
 private installation of [Open Source Scalr][3].
 
 
-  [1]: http://wiki.scalr.com/x/hABx
+  [1]: https://scalr-wiki.atlassian.net/wiki/x/KiAb
   [2]: http://www.scalr.com
   [3]: https://github.com/Scalr/scalr
