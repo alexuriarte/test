@@ -40,11 +40,13 @@ if (is_running(PID_FILE)) {
   $status  = "Currently simulating load";
   $cta     = "Stop simulating load";
   $button  = "Stop";
+  $cls     = "btn-danger";
   $action  = ACTION_STOP;
 } else {
   $status  = "Currently not simulating load";
   $cta     = "Start simulating load";
   $button  = "Start";
+  $cls     = "btn-success";
   $action  = ACTION_START;
 } 
 ?>
@@ -56,7 +58,7 @@ if (is_running(PID_FILE)) {
         <fieldset>
           <div class="input-append">
             <input type="hidden" name="action" value="<? echo $action; ?>" />
-            <input type="submit" class="btn btn-success" value="<? echo $button; ?>"/>
+            <input type="submit" class="btn <? echo $cls; ?>" value="<? echo $button; ?>"/>
           </div>
         </fieldset>
       </form>
@@ -64,7 +66,7 @@ if (is_running(PID_FILE)) {
       <hr/>
 
       <h2>Configuring autoscaling</h2>
-      <p>To make sure your app autoscales based on this CPU Cache Line Activity, make sure that you defined autoscaling based on Load Averages.</p>
+      <p>To make sure that Scalr autoscales your app, define an autoscaling policy using Load Averages.</p>
 <?
 } elseif (METHOD === "POST") {
   $action = $_POST["action"];
