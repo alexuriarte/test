@@ -21,25 +21,42 @@ include_once("functions.php");
     </div>
     <div class="container">
 <?
+$n_cpus = get_n_cpus();
+
 if (METHOD === "GET") {
 ?>
       <h2>CPU Status</h2>
-      <p><code><? echo exec('uptime') ?></code></p>
-      <small class="muted">This value will be used by Scalr for autoscaling.</small>
+      <div>
+        <p>Number of CPUS: <code><? echo $n_cpus; ?></code></p>
+      </div>
+      <div>
+        <p>Uptime: <code><? echo exec('uptime'); ?></code></p>
+        <small class="muted">This value will be used by Scalr for autoscaling.</small>
+      </div>
 
       <h2>Load Simulation</h2>
-<? if (is_running(PID_FILE)) { ?>
-      <p>Currently simulating load</p>
-<? } else { ?>
-      <p>Currently not simulating load</p>
-<? } ?>
+<? 
+if (is_running(PID_FILE)) {
+  $status  = "Currently simulating load";
+  $cta     = "Stop simulating load";
+  $button  = "Stop";
+  $action  = ACTION_STOP;
+} else {
+  $status  = "Currently not simulating load";
+  $cta     = "Start simulating load";
+  $button  = "Start";
+  $action  = ACTION_START;
+} 
+?>
 
-      <h2>Simulate a different level:</h2>
+      <p><? echo $status; ?></p>
+
+      <h2><? echo $cta; ?></h2>
       <form action="/" method="post" class="form-inline">
         <fieldset>
           <div class="input-append">
-            <input autofocus="autofocus" type="text" name="value" placeholder="New Value..."/>
-            <input type="submit" class="btn btn-success" value="Submit it!"/>
+            <input type="hidden" name="action" value="<? echo $action; ?>" />
+            <input type="submit" class="btn btn-success" value="<? echo $button; ?>"/>
           </div>
         </fieldset>
       </form>
@@ -50,23 +67,27 @@ if (METHOD === "GET") {
       <p>To make sure your app autoscales based on this CPU Cache Line Activity, make sure that you defined autoscaling based on Load Averages.</p>
 <?
 } elseif (METHOD === "POST") {
-  $value = $_POST["value"];
-  if (is_numeric($value)) {
-    write_metric((float) $value);
-    header("Location: /");
-  } else { ?>
+  $action = $_POST["action"];
+
+  if ($action === ACTION_START) {
+    if (!is_running(PID_FILE)) {
+      start_process("stress --cpu $n_cpus", OUTPUT_FILE, PID_FILE);
+    }
+  } elseif ($action === "") {
+    if (is_running(PID_FILE)) {
+      kill_process(PID_FILE);
+    }
+  } else { 
+    ?>
       <div class="alert alert-error">
-        This value ("<? echo $value; ?>") is invalid.
+        This action is invalid: "<? echo $action; ?>")
       </div>
       <div class="text-center">
         <a href="/" class="btn btn-large btn-primary" type="button">Please try again!</a>
       </div>
-      <hr/>
-      <div>
-        <small class="muted">Hint: You should use a number for the metric!</small>
-      </div>
-<?
+    <?
   }
+
 } else {
   echo "Unsupported method! (Try GET!)";
 }
