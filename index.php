@@ -73,21 +73,22 @@ if (is_running(PID_FILE)) {
     if (!is_running(PID_FILE)) {
       start_process("stress --cpu $n_cpus", OUTPUT_FILE, PID_FILE);
     }
-  } elseif ($action === "") {
+    header("Location: /");
+  } elseif ($action === ACTION_STOP) {
     if (is_running(PID_FILE)) {
       kill_process(PID_FILE);
     }
-  } else { 
+    header("Location: /");
+  } else {
     ?>
       <div class="alert alert-error">
-        This action is invalid: "<? echo $action; ?>")
+        This action is invalid: "<? echo $action; ?>"
       </div>
       <div class="text-center">
         <a href="/" class="btn btn-large btn-primary" type="button">Please try again!</a>
       </div>
     <?
   }
-
 } else {
   echo "Unsupported method! (Try GET!)";
 }
