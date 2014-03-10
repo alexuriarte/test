@@ -4,7 +4,7 @@ Scalr Custom Metric App
 This App
 --------
 
-This is a demo app for you to experiment with custom metrics.
+This is a demo app for you to experiment with autoscaling.
 
 This Tutorial
 -------------
