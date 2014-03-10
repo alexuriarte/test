@@ -1,4 +1,5 @@
 <?php
-DEFINE("METRIC_PATH", "/tmp/cache-line-activity");
+DEFINE("PID_FILE", "/tmp/stress-pid-file");
+DEFINE("OUTPUT_FILE", "/tmp/stress-output-file");
 DEFINE("METHOD", $_SERVER['REQUEST_METHOD']);
 ?>

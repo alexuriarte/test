@@ -16,17 +16,23 @@ include_once("functions.php");
     <div class="hero-unit">
       <img src="/static/img/scalr-logo.png" alt="Scalr Logo" class="pull-left"/>
       <h1>Custom Metric App</h1>
-      <p>This is the Custom Metric demo app.</p>
-      <p>This app lets you start and stop CPU stress.</p>
+      <p>This is the autoscaling demo app.</p>
+      <p>This application lets you monitor, as well as simulate CPU load.</p>
     </div>
     <div class="container">
 <?
 if (METHOD === "GET") {
 ?>
-      <h2>Server Status</h2>
-      <p>CPU Status is currently:</p>
-      <p><? echo exec('uptime') ?></p>
+      <h2>CPU Status</h2>
+      <p><code><? echo exec('uptime') ?></code></p>
       <small class="muted">This value will be used by Scalr for autoscaling.</small>
+
+      <h2>Load Simulation</h2>
+<? if (is_running(PID_FILE)) { ?>
+      <p>Currently simulating load</p>
+<? } else { ?>
+      <p>Currently not simulating load</p>
+<? } ?>
 
       <h2>Simulate a different level:</h2>
       <form action="/" method="post" class="form-inline">
@@ -41,8 +47,7 @@ if (METHOD === "GET") {
       <hr/>
 
       <h2>Configuring autoscaling</h2>
-      <p>To make sure your app autoscales based on this CPU Cache Line Activity, make sure that you defined
-         autoscaling based on Load Averages.</p>
+      <p>To make sure your app autoscales based on this CPU Cache Line Activity, make sure that you defined autoscaling based on Load Averages.</p>
 <?
 } elseif (METHOD === "POST") {
   $value = $_POST["value"];
