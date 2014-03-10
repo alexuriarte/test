@@ -17,21 +17,15 @@ include_once("functions.php");
       <img src="/static/img/scalr-logo.png" alt="Scalr Logo" class="pull-left"/>
       <h1>Custom Metric App</h1>
       <p>This is the Custom Metric demo app.</p>
-      <p>This lets you simulate and monitor the "CPU Cache Line activity" on this server.</p>
-      <p>This is a per-server metric, so its value might be different on each of your servers!</p>
-      <small class="muted">
-        Note that this is all fictional: CPU Cache Line activity isn't really monitored, and wouldn't
-        really make sense for autoscaling!
-      </small>
+      <p>This app lets you start and stop CPU stress.</p>
     </div>
     <div class="container">
 <?
 if (METHOD === "GET") {
 ?>
-      <h2>Current Value of the Metric</h2>
-      <p>CPU Cache Line Activity is currently at:
-        <span class="badge badge-info"><b><?php echo read_metric(); ?></b></span>
-      </p>
+      <h2>Server Status</h2>
+      <p>CPU Status is currently:</p>
+      <p><? echo exec('uptime') ?></p>
       <small class="muted">This value will be used by Scalr for autoscaling.</small>
 
       <h2>Simulate a different level:</h2>
@@ -48,7 +42,7 @@ if (METHOD === "GET") {
 
       <h2>Configuring autoscaling</h2>
       <p>To make sure your app autoscales based on this CPU Cache Line Activity, make sure that you defined
-         a file-based custom metric that uses <code><? echo METRIC_PATH; ?></code> as data source.</p>
+         autoscaling based on Load Averages.</p>
 <?
 } elseif (METHOD === "POST") {
   $value = $_POST["value"];
