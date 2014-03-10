@@ -35,7 +35,7 @@ if (METHOD === "GET") {
       </div>
 
       <h2>Load Simulation</h2>
-<? 
+<?
 if (is_running(PID_FILE)) {
   $status  = "Currently simulating load";
   $cta     = "Stop simulating load";
@@ -48,7 +48,7 @@ if (is_running(PID_FILE)) {
   $button  = "Start";
   $cls     = "btn-success";
   $action  = ACTION_START;
-} 
+}
 ?>
 
       <p><? echo $status; ?></p>
