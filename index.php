@@ -22,12 +22,16 @@ include_once("functions.php");
     <div class="container">
 <?
 $n_cpus = get_n_cpus();
+$stress_cli = sprintf("stress --cpu %s --io %s", $n_cpus * LOAD_FACTOR, $n_cpus * LOAD_FACTOR);
 
 if (METHOD === "GET") {
 ?>
       <h2>CPU Status</h2>
       <div>
         <p>Number of CPUS: <code><? echo $n_cpus; ?></code></p>
+      </div>
+      <div>
+        <p>Load generation command: <code><? echo $stress_cli; ?></code></p>
       </div>
       <div>
         <p>Uptime: <code><? echo exec('uptime'); ?></code></p>
@@ -73,7 +77,7 @@ if (is_running(PID_FILE)) {
 
   if ($action === ACTION_START) {
     if (!is_running(PID_FILE)) {
-      start_process("stress --cpu $n_cpus", OUTPUT_FILE, PID_FILE);
+      start_process($stress_cli, OUTPUT_FILE, PID_FILE);
     }
     header("Location: /");
   } elseif ($action === ACTION_STOP) {
