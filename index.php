@@ -5,7 +5,7 @@ include_once("functions.php");
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Custom Metric App</title>
+    <title>Autoscaling Demo App</title>
     <link type="text/css" href="/static/css/bootstrap.css" rel="stylesheet">
     <link type="text/css" href="/static/css/bootstrap-responsive.css" rel="stylesheet">
     <link type="image/x-icon" href="/static/img/favicon.ico" rel="shortcut icon" />
@@ -15,7 +15,7 @@ include_once("functions.php");
   <body>
     <div class="hero-unit">
       <img src="/static/img/scalr-logo.png" alt="Scalr Logo" class="pull-left"/>
-      <h1>Custom Metric App</h1>
+      <h1>Autoscaling Demo App</h1>
       <p>This is the autoscaling demo app.</p>
       <p>This application lets you monitor, as well as simulate CPU load.</p>
     </div>
