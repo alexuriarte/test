@@ -3,7 +3,7 @@ set -o errexit
 set -o nounset
 
 DEFAULT_DEPLOY_PATH=/var/www
-DEFAULT_APP_REPO=https://github.com/scalr-tutorials/custom-metrics.git
+DEFAULT_APP_REPO=https://github.com/scalr-tutorials/autoscaling.git
 DEFAULT_APP_BRANCH=master
 
 : ${DEPLOY_PATH:="$DEFAULT_DEPLOY_PATH"}
@@ -12,9 +12,9 @@ DEFAULT_APP_BRANCH=master
 
 # Install git
 if [ -f /etc/debian_version ]; then
-  apt-get install -y git
+  apt-get install -y git stress
 elif [ -f /etc/redhat-release ]; then
-  yum -y install git
+  yum -y install git stress
 else
     echo "Unsupported OS"
     exit 1
