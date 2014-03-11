@@ -1,5 +1,5 @@
-Scalr Custom Metric App
-=======================
+Scalr Autoscaling Tutorial
+==========================
 
 This App
 --------
