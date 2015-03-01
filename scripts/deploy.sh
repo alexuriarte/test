@@ -31,7 +31,3 @@ else
   git pull --force
   git checkout --force $APP_BRANCH
 fi
-
-# Add a value to the custom metric
-echo 0 > /tmp/cache-line-activity
-chmod 666 /tmp/cache-line-activity
