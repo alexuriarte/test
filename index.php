@@ -20,7 +20,7 @@ include_once("functions.php");
       <p>This application lets you monitor, as well as simulate CPU load.</p>
     </div>
     <div class="container">
-<?
+<?php
 $n_cpus = get_n_cpus();
 $stress_cli = sprintf("stress --cpu %s --io %s", $n_cpus * LOAD_FACTOR, $n_cpus * LOAD_FACTOR);
 
@@ -28,18 +28,18 @@ if (METHOD === "GET") {
 ?>
       <h2>CPU Status</h2>
       <div>
-        <p>Number of CPUS: <code><? echo $n_cpus; ?></code></p>
+        <p>Number of CPUS: <code><?php echo $n_cpus; ?></code></p>
       </div>
       <div>
-        <p>Load generation command: <code><? echo $stress_cli; ?></code></p>
+        <p>Load generation command: <code><?php echo $stress_cli; ?></code></p>
       </div>
       <div>
-        <p>Uptime: <code><? echo exec('uptime'); ?></code></p>
+        <p>Uptime: <code><?php echo exec('uptime'); ?></code></p>
         <small class="muted">This value will be used by Scalr for autoscaling.</small>
       </div>
 
       <h2>Load Simulation</h2>
-<?
+<?php
 if (is_running(PID_FILE)) {
   $status  = "Currently simulating load";
   $cta     = "Stop simulating load";
@@ -55,14 +55,14 @@ if (is_running(PID_FILE)) {
 }
 ?>
 
-      <p><? echo $status; ?></p>
+      <p><?php echo $status; ?></p>
 
-      <h2><? echo $cta; ?></h2>
+      <h2><?php echo $cta; ?></h2>
       <form action="/" method="post" class="form-inline">
         <fieldset>
           <div class="input-append">
-            <input type="hidden" name="action" value="<? echo $action; ?>" />
-            <input type="submit" class="btn <? echo $cls; ?>" value="<? echo $button; ?>"/>
+            <input type="hidden" name="action" value="<?php echo $action; ?>" />
+            <input type="submit" class="btn <?php echo $cls; ?>" value="<?php echo $button; ?>"/>
           </div>
         </fieldset>
       </form>
@@ -71,7 +71,7 @@ if (is_running(PID_FILE)) {
 
       <h2>Configuring autoscaling</h2>
       <p>To make sure that Scalr autoscales your app, define an autoscaling policy using Load Averages.</p>
-<?
+<?php
 } elseif (METHOD === "POST") {
   $action = $_POST["action"];
 
@@ -88,12 +88,12 @@ if (is_running(PID_FILE)) {
   } else {
     ?>
       <div class="alert alert-error">
-        This action is invalid: "<? echo $action; ?>"
+        This action is invalid: "<?php echo $action; ?>"
       </div>
       <div class="text-center">
         <a href="/" class="btn btn-large btn-primary" type="button">Please try again!</a>
       </div>
-    <?
+    <?php
   }
 } else {
   echo "Unsupported method! (Try GET!)";
