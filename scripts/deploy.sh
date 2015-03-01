@@ -2,32 +2,40 @@
 set -o errexit
 set -o nounset
 
-DEFAULT_DEPLOY_PATH=/var/www
 DEFAULT_APP_REPO=https://github.com/scalr-tutorials/autoscaling.git
 DEFAULT_APP_BRANCH=master
 
-: ${DEPLOY_PATH:="$DEFAULT_DEPLOY_PATH"}
 : ${APP_REPO:="$DEFAULT_APP_REPO"}
 : ${APP_BRANCH:="$DEFAULT_APP_BRANCH"}
 
-# Install git
+# Install all dependencies
 if [ -f /etc/debian_version ]; then
-  apt-get install -y git stress
+  apt-get update
+  apt-get install -y git stress apache2 libapache2-mod-php5
+  service apache2 restart
 elif [ -f /etc/redhat-release ]; then
-  yum -y install git stress
+  yum -y install git stress httpd php
+  service httpd restart
 else
-    echo "Unsupported OS"
-    exit 1
+  echo "Unsupported OS"
+  exit 1
 fi
+
+if [ -d "/var/www/html" ]; then
+  DEFAULT_DEPLOY_PATH="/var/www/html"
+else
+  DEFAULT_DEPLOY_PATH="/var/www"
+fi
+: ${DEPLOY_PATH:="$DEFAULT_DEPLOY_PATH"}
 
 # Install or Update
 
 if [ ! -d "$DEPLOY_PATH/.git" ]; then
-  mkdir -p $DEPLOY_PATH
-  rm -r $DEPLOY_PATH
-  git clone --branch $APP_BRANCH $APP_REPO $DEPLOY_PATH
+  mkdir -p "$DEPLOY_PATH"
+  rm -r "$DEPLOY_PATH"
+  git clone --branch "$APP_BRANCH" "$APP_REPO" "$DEPLOY_PATH"
 else
-  cd $DEPLOY_PATH
+  cd "$DEPLOY_PATH"
   git pull --force
-  git checkout --force $APP_BRANCH
+  git checkout --force "$APP_BRANCH"
 fi
