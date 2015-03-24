@@ -26,16 +26,16 @@ if [ -d "/var/www/html" ]; then
 else
   DEFAULT_DEPLOY_PATH="/var/www"
 fi
-: ${DEPLOY_PATH:="$DEFAULT_DEPLOY_PATH"}
+: ${APP_DEPLOY_PATH:="$DEFAULT_DEPLOY_PATH"}
 
 # Install or Update
 
-if [ ! -d "$DEPLOY_PATH/.git" ]; then
-  mkdir -p "$DEPLOY_PATH"
-  rm -r "$DEPLOY_PATH"
-  git clone --branch "$APP_BRANCH" "$APP_REPO" "$DEPLOY_PATH"
+if [ ! -d "$APP_DEPLOY_PATH/.git" ]; then
+  mkdir -p "$APP_DEPLOY_PATH"
+  rm -r "$APP_DEPLOY_PATH"
+  git clone --branch "$APP_BRANCH" "$APP_REPO" "$APP_DEPLOY_PATH"
 else
-  cd "$DEPLOY_PATH"
+  cd "$APP_DEPLOY_PATH"
   git pull --force
   git checkout --force "$APP_BRANCH"
 fi
