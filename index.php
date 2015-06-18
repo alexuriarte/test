@@ -5,7 +5,7 @@ include_once("functions.php");
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Autoscaling Demo App</title>
+    <title>Autoscaling Demo App JPL</title>
     <link type="text/css" href="/static/css/bootstrap.css" rel="stylesheet">
     <link type="text/css" href="/static/css/bootstrap-responsive.css" rel="stylesheet">
     <link type="image/x-icon" href="/static/img/favicon.ico" rel="shortcut icon" />
